@@ -21,7 +21,7 @@ The database is structured with both normalized and denormalized tables for opti
 The database includes several tables that store data about tournaments, teams, players, and their statistics. Each table is created using SQL, and all necessary primary and foreign keys are included for data integrity.
 
 Example of table creation:
-\`\`\`sql
+
 CREATE TABLE Tournament (
     Tournament_ID Float(10) Not Null,
     Tournament_name Varchar(20) Not Null,
@@ -29,37 +29,37 @@ CREATE TABLE Tournament (
     End_date Date Not Null,
     Primary key (Tournament_ID)
 );
-\`\`\`
+
 
 ### 2. Data Insertion
 Sample data is inserted into the tables to populate the database. The \`INSERT ALL INTO\` query is used for inserting multiple rows at once for efficiency.
 
-Example:
-\`\`\`sql
+Example data insertion:
+
 INSERT ALL
 INTO TournamentSport (Tournament_IDSport_ID) VALUES ('0001''01')
 INTO TournamentSport (Tournament_IDSport_ID) VALUES ('0001''02')
 INTO TournamentSport (Tournament_IDSport_ID) VALUES ('0001''03')
 SELECT * FROM dual;
-\`\`\`
+
 
 ### 3. Views
 Views are created to simplify complex queries by combining data from multiple tables. These views present meaningful information to the user, such as schedules and player performance.
 
 Example view:
-\`\`\`sql
+
 CREATE VIEW TournamentScheduleView AS
 SELECT t.Tournament_Name, s.Sport_Name, sch.Venue, sch.Date_Time
 FROM Tournament t
 JOIN Schedule sch ON t.Tournament_ID = sch.Tournament_ID
 JOIN Sport s ON s.Sport_ID = sch.Sport_ID;
-\`\`\`
+
 
 ### 4. Stored Procedures
 Stored procedures are implemented to automate processes like calculating player statistics or generating team schedules. These procedures take input parameters and perform updates or insertions into the database based on complex logic.
 
 Example procedure:
-\`\`\`plsql
+
 CREATE OR REPLACE PROCEDURE CalculatePlayerStatistics(
   p_player_id IN PlayerStatistics.Player_ID%TYPE,
   p_sport_id IN PlayerStatistics.Sport_ID%TYPE
@@ -72,13 +72,13 @@ BEGIN
   WHERE Player_ID = p_player_id AND Sport_ID = p_sport_id;
   COMMIT;
 END;
-\`\`\`
+
 
 ### 5. Triggers
 Triggers are used to automatically update player statistics whenever a new game is recorded. This ensures that the data remains consistent and up-to-date without manual intervention.
 
 Example trigger:
-\`\`\`plsql
+
 CREATE OR REPLACE TRIGGER UpdatePlayerStatisticsTrigger
 AFTER INSERT ON Game
 FOR EACH ROW
@@ -90,7 +90,7 @@ BEGIN
       Assist = Assist + :NEW.Assist
   WHERE Player_ID = :NEW.Player_ID AND Sport_ID = :NEW.Sport_ID;
 END;
-\`\`\`
+
 
 ## How to Run the Project
 1. Clone this repository to your local machine.
